@@ -62,8 +62,11 @@ C.
       DATA tmaxfd_med/ n_med*10.0  / ! max. angle due to field in one step
 C.
 C.    DATA dmaxms_med/ n_med*-1.0 / ! max displace for mult scat. in one step
-      DATA dmaxms_med/ (n_med-4)*-1.0,4.0e-5,-1.0,4.0e-5,4.0e-5 / ! max displacement 
-C     for mult scat. in one step
+      DATA dmaxms_med/ -1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,
+     *     -1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,-1.0,
+     *     -1.0,-1.0,-1.0,
+     *      4.0e-5,-1.0,4.0e-5,4.0e-5 /
+      
 C.
       DATA deemax_med/ n_med*-1.0 / ! max. fractional energy loss in one step
 C.
