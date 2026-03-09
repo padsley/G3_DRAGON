@@ -408,6 +408,7 @@ C
       e_bgo_second = e_bgos_deposit(2,2)
 C     Use adjacency matrix to addback BGOs, if more than one BGO hit
 C     Count BGOs and energys as well
+      write(*,*)'num_bgos_hit_ab'
       num_bgos_hit_ab = num_bgos_hit
       if (num_bgos_hit.ne.1)then
       Do i = 1, num_bgos_hit - 1
@@ -437,6 +438,7 @@ C     Count BGOs and energys as well
          endif
       enddo
 C     Filling the appropriate histograms
+      write(*,*)'recoil_hit_ENDV =',recoil_hit_ENDV
       if (recoil_hit_ENDV.eq.1) then
          CALL hfill(511, 1.0*num_bgos_hit, 0.0, 1.0)
          CALL hfill(512, 1.0*e_bgos_total, 0.0, 1.0)

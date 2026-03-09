@@ -33,6 +33,7 @@ C.
 C.
       DATA dummy / 0.0 /
 C.
+C.      write(*,*)'gustep_t, itrtyp',itrtyp
       If(itrtyp.ne.8)RETURN
 C.
       CALL uhtoc(names(nlevel),4,chname_nlevel,4)
@@ -190,6 +191,7 @@ C.
       Endif
       If(inwvol.eq.1 .and. chname_nlevel.eq.'TEND') then
 C.
+      write(*,*)'ntargexit=',ntargexit
       if (ipart .eq. irecoil) ntargexit = ntargexit +1
       if (ipart .eq. 80) nbeamout = nbeamout +1
       

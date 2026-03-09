@@ -183,6 +183,7 @@ C.
       CALL vfill(ivcopy,2*max_conv,-999)
       CALL vfill(true_conv,3*max_conv,-999.0)
 C.
+      write(*,*)'nvertx = ',nvertx
       Do i = 1, nvertx
 C.
          CALL gfvert(i,vert,ntbeam,nttarg,tofg,ubuf,nubuf)
@@ -219,6 +220,7 @@ C.
 C.
          Endif
 C.
+         write(*,*)'nubuf = ',nubuf,' ubuf(1) = ',ubuf(1)
          If(nubuf.eq.6.and.int(ubuf(1)).eq. 1)then	! photon conv. vertex
 C.
            If(nconv + 1 .le. max_conv)then
