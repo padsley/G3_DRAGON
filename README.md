@@ -83,7 +83,7 @@ To build the code using Docker, first run the following:
 ```
  docker build --platform=linux/386 --no-cache -t geant3-dragon .
 ```
-which should, pending any particular problems, make a Docker image for running the code. This seems to take a few minutes on whatever computer I'm using. Usually around 3.
+which should, pending any particular problems, make a Docker image for running the code. This seems to take a few minutes on whatever computer I'm using and the speed of the network connexion. Usually around 3 at the lab and maybe up to 10 at home (I'm cheap and I don't pay for fast internet).
 
 Once this stage completes, run:
 ```
