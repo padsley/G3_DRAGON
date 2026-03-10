@@ -77,14 +77,16 @@ You will be prompted to enter a number from 1 to 4 to choose which thresholds we
 out a number for the efficiency based on the total number of counts above threshold in all BGOs, plus a statistical error based on the 
 number of detected counts. To run again for a different threshold, reload the macro and run again.
 
+Thanks to the wonders of Claude, my polite butler, I think that the following is at least an approximation for making the Geant3 DRAGON simulation work in a Docker tupperware:
+
 To build the code using Docker, first run the following:
 ```
-docker build -t geant3-dragon .
+ docker build --platform=linux/386 --no-cache -t geant3-dragon .
 ```
 which should, pending any particular problems, make a Docker image for running the code. This seems to take a few minutes on whatever computer I'm using. Usually around 3.
 
 Once this stage completes, run:
 ```
-docker run -it --no-cache geant3-dragon
+docker run -it --platform linux/386 geant3-dragon
 ```
 The "no-cache" option is there to force the re-pulling of my DRAGON repo from Github in case I made changes. That's because, at least when I wrote this comment (March 9th 2026), there was no useful gamma-ray information coming from the simulation. There were, however, working gamma rays being generated from the code. Just not gamma rays detected in the BGOs. I'm hunting that down.
