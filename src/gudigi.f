@@ -161,6 +161,7 @@ C.
 
 	 CALL gfhits('SCNT',iudet,nv,nh,nhmax,0,
      &			numvs,itra,numbv,hits,nhits2)
+         
 
 
          CALL gfhits('SCNT','HSNG',nv,nh,numbv,nhmax,0,
@@ -181,6 +182,7 @@ C     &               numvs,itra,numbv,hits,nhits)
 	 write(*,*)'numvs = ',numvs
          write(*,*)'itra = ',itra
 	 write(*,*)'numbv = ',numbv
+C         write(*,*)'hits = ',hits
          write(*,*)'nhits = ',nhits
 
 
