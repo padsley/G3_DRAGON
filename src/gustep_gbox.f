@@ -114,6 +114,9 @@ C.
 C *** Store hits
 C.
       If(numed.eq.n_detmate.and.itrtyp.ne.7)CALL ghidet
+      If(numed.eq.n_detmate.and.itrtyp.ne.7)then
+	write(*,*)'CALL GHIDET PASSED'
+      Endif
 C.
 C *** Daughter particles that were generated in the current step
 C ***                  are put on the stack

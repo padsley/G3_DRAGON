@@ -1559,6 +1559,10 @@ C.
       DATA nbitsh_dedx, nbitsh_time, nbitsh_coor / 32  ,    32,    32 /
       DATA orig_dedx,   orig_time,   orig_coor  / 0.  , 1000.,  500.  /
       DATA fact_dedx,   fact_time,   fact_coor  / 1.E6,  1.E5, 1000.  /
+
+      INTEGER nh_check, nbitsh_check(5)
+      REAL orig_check(5), fact_check(5)
+      CHARACTER*4 chnamh_check(5)
 C.
 ************************************************************************
 *                                                                      *
@@ -1591,6 +1595,23 @@ C.
       name = 'HSNG'
       CALL gsdet('SCNT',name,1,name,nbitsv,idtyp,100,0,iset,idet)
       CALL gsdeth('SCNT',name,5,chnamh,nbitsh,orig,fact)
+      WRITE(*,*) '*** GSDETH called for SCNT/HSNG with 5 params'
+      WRITE(*,*) '    iset=', iset, ' idet=', idet
+      
+      WRITE(*,*) '=== After GSDETH ==='
+      WRITE(*,*) 'Set: SCNT, Det: ', name
+      WRITE(*,*) 'iset=', iset, ' idet=', idet
+      WRITE(*,*) 'Hit names:', (chnamh(i), i=1,5)
+
+      CALL GFDETH('SCNT','HSNG',nh_check,chnamh_check,nbitsh_check,
+     &            orig_check,fact_check)
+      WRITE(*,*) '=== GFDETH verification ==='
+      WRITE(*,*) 'nh_check (should be 5):', nh_check
+      IF (nh_check .EQ. 5) THEN
+         WRITE(*,*) 'SUCCESS: 5 parameters registered'
+      ELSE
+         WRITE(*,*) 'FAILURE: Only', nh_check, ' parameters!'
+      ENDIF
 C.
 ************************************************************************
 *                                                                      *

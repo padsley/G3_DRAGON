@@ -59,6 +59,8 @@ C.      include 'gctrak.inc'
 C.
       INTEGER i, j, k, n, itrig
       INTEGER nset, iset, js, ndet, idet, jd, nv, nh
+C.      INTEGER nset, iset, js, ndet, idet, jd, nv
+      INTEGER NUMB(1000)
 C.
       INTEGER nvdim, nhdim, nhmax 
 C.
@@ -70,8 +72,9 @@ C.
       INTEGER numvs(nvdim),numbv(nvdim,nhmax)
       DATA numvs / nvdim*0 /
 C.
-      INTEGER nhits, itra(nhmax)
-      REAL hits(nhdim,nhmax)
+      INTEGER nhits, itra(nhmax), ntra
+C      REAL hits(nhdim,nhmax)
+      REAL hits(5,500)
 C.
       CHARACTER*4 iudet
 C.
@@ -102,6 +105,18 @@ C.
 C JS adds e_bgos_deposit to record energy deposited in each BGO,
 C   one position in array per BGO
       REAL e_bgos_deposit(30,2)
+
+      CHARACTER*4 chnamh_test(5)
+      INTEGER nbitsh_test(5), nh_test
+      REAL orig_test(5), fact_test(5)
+      CHARACTER*4 name_test
+      INTEGER nbitsv_test
+C      INTEGER iset_out, idet_out
+
+      INTEGER nvol_test, numbv_test(10), nwhi, nwdi
+      INTEGER iset_out, idet_out, idtyp_test
+      CHARACTER*4 chname_test(10)
+      DATA numbv_test /10*0/
      
 C.
       If(jhits.le.0)RETURN                    !
@@ -143,8 +158,39 @@ C.
          If(nv.ne.nvdim)goto 999
          If(nh.ne.nhdim)goto 999     !
 C.
-         CALL gfhits('SCNT',iudet,nv,nh,nhmax,0,
-     &               numvs,itra,numbv,hits,nhits)
+C	 write(*,*)'nh = ',nh
+
+C	 CALL GFDETH('SCNT','HSNG',5,chnamh_test,nbitsh_test,
+C     &            orig_test,fact_test,nh_test)
+
+C	 WRITE(*,*) 'GFDETH: nh_test=', nh_test
+
+
+C         CALL GFDET('SCNT','HSNG',1,name_test,nbitsv_test,
+C     &           idtyp_test,nwhi,nwdi,iset_out,idet_out)
+C         WRITE(*,*) 'GFDET: iset=',iset_out,' idet=',idet_out,
+C     &           ' nwhi=',nwhi
+
+         WRITE(*,*) '=== Before GFHITS ==='
+         WRITE(*,*) 'Looking for set: SCNT, det: HSNG'
+         WRITE(*,*) 'nv=', nv, ' nhmax=', nhmax
+
+         CALL gfhits('SCNT','HSNG',nv,nh,numbv,nhmax,0,
+     &            numvs,itra,ntra,hits,nhits)
+
+C         CALL gfhits('SCNT','HSNG',nv,nh,nhmax,0,
+C     &               numvs,itra,numbv,hits,nhits)      
+C         CALL gfhits('SCNT',iudet,nv,nh,nhmax,0,
+C     &               numvs,itra,numbv,hits,nhits)
+	 write(*,*)'GFHITS returned: nhits=', nhits, ' ntra=', ntra
+	 WRITE(*,*) 'nhits=', nhits, ' ntra=', ntra
+C         write(*,*)'iudet = ',iudet
+C         write(*,*)'nv = ',nv
+C         write(*,*)'nh = ',nh
+C	 write(*,*)'numvs = ',numvs
+C         write(*,*)'itra = ',itra
+C	 write(*,*)'numbv = ',numbv
+C         write(*,*)'nhits = ',nhits
 C.
          If(nhits.eq.0)goto 100
          CALL gsatt(iudet,'SEEN',0)
@@ -160,6 +206,11 @@ C.
             
             Do k = 1, melem
                If(numbv(1,j).eq.jelem(1,k))then
+                    write(*,*)'hits(1,',j,') = ',hits(1,j)
+		    write(*,*)'hits(2,',j,') = ',hits(2,j)
+                    write(*,*)'hits(3,',j,') = ',hits(3,j)
+		    write(*,*)'hits(4,',j,') = ',hits(4,j)
+                    write(*,*)'hits(5,',j,') = ',hits(5,j)
                     coord(1,k)=coord(1,k)+hits(5,j)*hits(1,j) !summing hits of
                     coord(2,k)=coord(2,k)+hits(5,j)*hits(2,j) !same module.
                     coord(3,k)=coord(3,k)+hits(5,j)*hits(3,j)
@@ -174,6 +225,7 @@ C     gaussian distributed resolution dependent on energy:
 C     Resolution based on linear fit to values of 14% for 661 keV and 
 C     4% for 10 MeV.(Temporary until I find the real resolution function).
                     resn = 0.14 - 0.001*energy(k)
+C                    write(*,*)'energy(',k,') = ',energy(k)
                     energy(k) = energy(k)*(1.0 + rndvec(1)*resn)
 
                     goto 10
@@ -203,10 +255,15 @@ C.--> 'energy(isort(1))' is highest E.
       If(melem.eq.0)RETURN
 C.
       CALL sortzv(energy,isort,melem,1,1,0)
+C      write(*,*)'energy = ',energy
+C      write(*,*)'isort = ',isort
+C      write(*,*)'melem = ',melem
 C.
+
       Do k = 1, melem
 C.
          e_detect   = e_detect   + energy(k)
+	 write(*,*)'e_detect = ',e_detect
 C.
          coord(1,k) = coord(1,k)/energy(k)
          coord(2,k) = coord(2,k)/energy(k)

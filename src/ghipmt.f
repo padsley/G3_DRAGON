@@ -23,6 +23,7 @@ C.
         hits(3) = z_fngr(number(nlevel-1))
         hits(4) = tofg
         hits(5) = 1.0
+	write(*,*)'ghipmt.f, hits(5) = ',hits(5)
 C.
         CALL gsahit(iset,idet,itra,numbv,hits,ihit)
 C.

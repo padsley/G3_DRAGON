@@ -14,7 +14,7 @@ C ========== TRIG: NEVENT ==========
 C
 C == NEVENT ==  Number of events to be processed
 C
-TRIG 10
+TRIG 1000
 C
 C ========== TIME: TIMINT TIMEND ITIME    ==========
 C == TIMINT  == Time used for initialization
@@ -162,7 +162,8 @@ C               is set for the initialization phase
 C == IDEMAX ==  Last event to debug.
 C == ITEST  ==  Print control frequency (for all events!)
 C
-DEBU -1 10000 1
+CDEBU -1 10000 1
+DEBU 1 10 1
 C
 C    *** The convention for GDEBUG is followed (see GEANT manual) ***
 C
@@ -200,7 +201,7 @@ C == ISWIT(9) = 0: write NO output information
 C             = 1: ASCII output for analysis to unit 22
 C               2: PAW Ntuple output : nt# 998, 999;
 C
-SWIT 0 0 0 0 0 0 0 0 0
+SWIT 0 5 0 0 0 0 0 0 2
 C
 C ========== HSTA: LHSTA
 C == LHSTA ==   NHSTA names of required standard histograms
