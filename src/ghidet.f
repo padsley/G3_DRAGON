@@ -75,16 +75,20 @@ C.
         hits(3) = (x1(3)+x2(3))/2.
         hits(4) = (tofin + tofout)/2. * 1.E9
         hits(5) = 1000. * edep
-	write(*,*)'hits(1) = ',hits(1)
-	write(*,*)'hits(2) = ',hits(2)
-	write(*,*)'hits(3) = ',hits(3)
-	write(*,*)'hits(4) = ',hits(4)
-	write(*,*)'hits(5) = ',hits(5)
+	write(*,*)'ghidet hits(1) = ',hits(1)
+	write(*,*)'ghidet hits(2) = ',hits(2)
+	write(*,*)'ghidet hits(3) = ',hits(3)
+	write(*,*)'ghidet hits(4) = ',hits(4)
+	write(*,*)'ghidet hits(5) = ',hits(5)
 C.
 C.--> Note: Use the factor used in file ugeom.f; 
 C.-->       subroutine UDET; variable fact_dedx
 C.
-        If(edep.gt.1.E-6)CALL gsahit(iset,idet,itra,numbv,hits,ihit)
+        If(edep.gt.1.E-6)then
+	  WRITE(*,*) 'GSAHIT: edep=',edep,' iset=',iset,' idet=',idet
+          CALL gsahit(iset,idet,itra,numbv,hits,ihit)
+	  WRITE(*,*) 'After GSAHIT: ihit=', ihit
+	ENDIF
 C.
       Endif
 C.

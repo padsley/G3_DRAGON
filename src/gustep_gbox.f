@@ -114,14 +114,15 @@ C.
 C *** Store hits
 C.
       If(numed.eq.n_detmate.and.itrtyp.ne.7)CALL ghidet
-      If(numed.eq.n_detmate.and.itrtyp.ne.7)then
-	write(*,*)'CALL GHIDET PASSED'
-      Endif
+C      If(numed.eq.n_detmate.and.itrtyp.ne.7)then
+C	write(*,*)'CALL GHIDET PASSED'
+C      Endif
 C.
 C *** Daughter particles that were generated in the current step
 C ***                  are put on the stack
 C.
       If(ngkine.gt.0)then
+	write(*,*)'ngkine>0'
 C.
         iflag = 0
         CALL uhtoc(kcase,4,chcase,4)

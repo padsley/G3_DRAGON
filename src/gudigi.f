@@ -72,7 +72,7 @@ C.
       INTEGER numvs(nvdim),numbv(nvdim,nhmax)
       DATA numvs / nvdim*0 /
 C.
-      INTEGER nhits, itra(nhmax), ntra
+      INTEGER nhits, nhits2, itra(nhmax), ntra
 C      REAL hits(nhdim,nhmax)
       REAL hits(5,500)
 C.
@@ -158,39 +158,33 @@ C.
          If(nv.ne.nvdim)goto 999
          If(nh.ne.nhdim)goto 999     !
 C.
-C	 write(*,*)'nh = ',nh
 
-C	 CALL GFDETH('SCNT','HSNG',5,chnamh_test,nbitsh_test,
-C     &            orig_test,fact_test,nh_test)
+	 CALL gfhits('SCNT',iudet,nv,nh,nhmax,0,
+     &			numvs,itra,numbv,hits,nhits2)
 
-C	 WRITE(*,*) 'GFDETH: nh_test=', nh_test
-
-
-C         CALL GFDET('SCNT','HSNG',1,name_test,nbitsv_test,
-C     &           idtyp_test,nwhi,nwdi,iset_out,idet_out)
-C         WRITE(*,*) 'GFDET: iset=',iset_out,' idet=',idet_out,
-C     &           ' nwhi=',nwhi
-
-         WRITE(*,*) '=== Before GFHITS ==='
-         WRITE(*,*) 'Looking for set: SCNT, det: HSNG'
-         WRITE(*,*) 'nv=', nv, ' nhmax=', nhmax
 
          CALL gfhits('SCNT','HSNG',nv,nh,numbv,nhmax,0,
      &            numvs,itra,ntra,hits,nhits)
+
+	 nhits = nhits2 !this is a hack to try to get the number of hits function to be working properly because that seems to be shitting the bed for some reason
 
 C         CALL gfhits('SCNT','HSNG',nv,nh,nhmax,0,
 C     &               numvs,itra,numbv,hits,nhits)      
 C         CALL gfhits('SCNT',iudet,nv,nh,nhmax,0,
 C     &               numvs,itra,numbv,hits,nhits)
-	 write(*,*)'GFHITS returned: nhits=', nhits, ' ntra=', ntra
+       write(*,*)'GFHITS returned: nhits=', nhits, ' ntra=', ntra
 	 WRITE(*,*) 'nhits=', nhits, ' ntra=', ntra
-C         write(*,*)'iudet = ',iudet
-C         write(*,*)'nv = ',nv
-C         write(*,*)'nh = ',nh
-C	 write(*,*)'numvs = ',numvs
-C         write(*,*)'itra = ',itra
-C	 write(*,*)'numbv = ',numbv
-C         write(*,*)'nhits = ',nhits
+	 write(*,*)'nhits2= ', nhits2
+         write(*,*)'iudet = ',iudet
+         write(*,*)'nv = ',nv
+         write(*,*)'nh = ',nh
+	 write(*,*)'numvs = ',numvs
+         write(*,*)'itra = ',itra
+	 write(*,*)'numbv = ',numbv
+         write(*,*)'nhits = ',nhits
+
+
+	
 C.
          If(nhits.eq.0)goto 100
          CALL gsatt(iudet,'SEEN',0)
@@ -203,14 +197,14 @@ C.
 C.
          Do 10 j = 1, nhits
 C.
-            
+         write(*,*)'melem = ',melem            
             Do k = 1, melem
                If(numbv(1,j).eq.jelem(1,k))then
-                    write(*,*)'hits(1,',j,') = ',hits(1,j)
-		    write(*,*)'hits(2,',j,') = ',hits(2,j)
-                    write(*,*)'hits(3,',j,') = ',hits(3,j)
-		    write(*,*)'hits(4,',j,') = ',hits(4,j)
-                    write(*,*)'hits(5,',j,') = ',hits(5,j)
+                    write(*,*)'gudigi hits(1,',j,') = ',hits(1,j)
+		    write(*,*)'gudigi hits(2,',j,') = ',hits(2,j)
+                    write(*,*)'gudigi hits(3,',j,') = ',hits(3,j)
+		    write(*,*)'gudigi hits(4,',j,') = ',hits(4,j)
+                    write(*,*)'gudigi hits(5,',j,') = ',hits(5,j)
                     coord(1,k)=coord(1,k)+hits(5,j)*hits(1,j) !summing hits of
                     coord(2,k)=coord(2,k)+hits(5,j)*hits(2,j) !same module.
                     coord(3,k)=coord(3,k)+hits(5,j)*hits(3,j)
@@ -252,12 +246,13 @@ C.
   100 Continue
 C.--> Sorts 'energy' vector in terms of decreasing energy (so that 
 C.--> 'energy(isort(1))' is highest E.
+      write(*,*)'1, melem = ',melem
       If(melem.eq.0)RETURN
 C.
       CALL sortzv(energy,isort,melem,1,1,0)
-C      write(*,*)'energy = ',energy
-C      write(*,*)'isort = ',isort
-C      write(*,*)'melem = ',melem
+      write(*,*)'energy = ',energy
+      write(*,*)'isort = ',isort
+      write(*,*)'2, melem = ',melem
 C.
 
       Do k = 1, melem
