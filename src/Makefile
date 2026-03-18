@@ -171,7 +171,8 @@ LIBS = -L/usr/lib/i386-linux-gnu -lgeant321 -lmathlib -lkernlib -lpacklib
 #    -lblas \
 #    -lnsl
 
-GLIBS = -L/usr/lib/i386-linux-gnu -lgeant321 -lpawlib -lgraflib -lgrafX11 -lmathlib -lkernlib -lpacklib -lgfortran
+#GLIBS = -L/usr/lib/i386-linux-gnu -lgeant321 -lpawlib -lgraflib -lgrafX11 -lmathlib -lkernlib -lpacklib -lgfortran
+GLIBS = -L/opt/2006/src/ -lgeant321 -lpawlib -lgraflib -lgrafX11 -lmathlib -lkernlib -lpacklib -lgfortran
 
 
 #------------------------------------------------------------------#
